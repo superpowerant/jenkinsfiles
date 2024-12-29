@@ -74,7 +74,8 @@ ${BUILD_COMMAND}
         sh '''
 docker build -t ${HARBOR_ADDRESS}/${PROJECT_NAME}/${IMAGE_NAME}:${TAG} .
 docker login -u ${HARBOR_NAME} -p ${HARBOR_PWD} ${HARBOR_ADDRESS}
-docker push ${HARBOR_ADDRESS}/${PROJECT_NAME}/${IMAGE_NAME}:${TAG}'''
+docker push ${HARBOR_ADDRESS}/${PROJECT_NAME}/${IMAGE_NAME}:${TAG}
+'''
       }
     }
 
@@ -84,7 +85,8 @@ docker push ${HARBOR_ADDRESS}/${PROJECT_NAME}/${IMAGE_NAME}:${TAG}'''
           sh '''
 docker build -t ${HARBOR_ADDRESS}/${PROJECT_NAME}/${IMAGE_NAME}:${TAG} .
 docker login -u ${HARBOR_NAME} -p ${HARBOR_PWD} ${HARBOR_ADDRESS}
-docker push ${HARBOR_ADDRESS}/${PROJECT_NAME}/${IMAGE_NAME}:${TAG}'''
+docker push ${HARBOR_ADDRESS}/${PROJECT_NAME}/${IMAGE_NAME}:${TAG}
+'''
         }
 
       }
