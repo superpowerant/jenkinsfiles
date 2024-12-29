@@ -46,7 +46,7 @@ ${BUILD_COMMAND}
           }
         }
 
-        stage('Test') {
+        stage('Scan') {
           steps {
             sh '''
 echo "ode scanning"
