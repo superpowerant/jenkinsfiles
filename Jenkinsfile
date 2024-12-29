@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('pulling') {
+    stage('Pulling') {
       parallel {
         stage('pulling code') {
           steps {
@@ -9,7 +9,7 @@ pipeline {
           }
         }
 
-        stage('pulling code by trigger') {
+        stage('trigger') {
           steps {
             git(url: 'https://github.com/superpowerant/jenkinsfiles.git', changelog: true, branch: 'env.gitlabBranch', credentialsId: '851f1073-6597-4b6f-8cba-10544554beb4')
             script {
@@ -22,7 +22,7 @@ pipeline {
       }
     }
 
-    stage('initConfig') {
+    stage('InitConfig') {
       steps {
         script {
           println "init configration"
@@ -36,11 +36,24 @@ pipeline {
     }
 
     stage('Build') {
-      steps {
-        sh '''
+      parallel {
+        stage('Build') {
+          steps {
+            sh '''
 echo "building start"
 ${BUILD_COMMAND}
 '''
+          }
+        }
+
+        stage('Test') {
+          steps {
+            sh '''
+echo "ode scanning"
+${SCANNING_COMMAND}'''
+          }
+        }
+
       }
     }
 
