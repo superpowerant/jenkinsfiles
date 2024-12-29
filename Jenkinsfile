@@ -60,8 +60,31 @@ ${SCANNING_COMMAND}'''
     stage('BuildContainer') {
       steps {
         container(name: 'BuilderContainer') {
-          sh '''echo "building start"
-${BUILD_COMMAND}'''
+          sh '''
+echo "building start"
+${BUILD_COMMAND}
+'''
+        }
+
+      }
+    }
+
+    stage('Image') {
+      steps {
+        sh '''
+docker build -t ${HARBOR_ADDRESS}/${PROJECT_NAME}/${IMAGE_NAME}:${TAG} .
+docker login -u ${HARBOR_NAME} -p ${HARBOR_PWD} ${HARBOR_ADDRESS}
+docker push ${HARBOR_ADDRESS}/${PROJECT_NAME}/${IMAGE_NAME}:${TAG}'''
+      }
+    }
+
+    stage('ImageContainer') {
+      steps {
+        container(name: 'ImageContainer') {
+          sh '''
+docker build -t ${HARBOR_ADDRESS}/${PROJECT_NAME}/${IMAGE_NAME}:${TAG} .
+docker login -u ${HARBOR_NAME} -p ${HARBOR_PWD} ${HARBOR_ADDRESS}
+docker push ${HARBOR_ADDRESS}/${PROJECT_NAME}/${IMAGE_NAME}:${TAG}'''
         }
 
       }
