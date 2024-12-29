@@ -18,5 +18,22 @@ pipeline {
       }
     }
 
+    stage('initConfig') {
+      steps {
+        script {
+          println "init configration"
+          CommitMessage = sh(returnStdOut: true, script: "git log -I --pretty=format:'%h : %an %s'").trim()
+          CommitID = sh(returnStdOut: true, script: "git log -I --pretty=format:'%h'").trim()
+          def curDate = sh(returnStdOut: true, script: "date '+%Y%m%d-%H%M%S'").trim()
+        }
+
+      }
+    }
+
+  }
+  environment {
+    CommitMessage = ''
+    CommitID = ''
+    TAG = ''
   }
 }
