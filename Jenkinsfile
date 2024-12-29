@@ -57,6 +57,16 @@ ${SCANNING_COMMAND}'''
       }
     }
 
+    stage('BuildContainer') {
+      steps {
+        container(name: 'BuilderContainer') {
+          sh '''echo "building start"
+${BUILD_COMMAND}'''
+        }
+
+      }
+    }
+
   }
   environment {
     CommitMessage = ''
