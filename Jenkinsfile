@@ -92,6 +92,20 @@ docker push ${HARBOR_ADDRESS}/${PROJECT_NAME}/${IMAGE_NAME}:${TAG}
       }
     }
 
+    stage('DeployContainer') {
+      steps {
+        container(name: 'kubctl') {
+          sh '''
+kubectl config use-context ${CLUSTER} --kubeconfig=${KUBECONFIG_PATH}
+kubectl set image ${DEPLOY_TYPE} -l ${RESOURCE_LABEL} ${IMAGE_NAME}=${HARBOR_ADDRESS}/${PROJECT_NAME}/${IMAGE_NAME}:${TAG} -n ${NAMESPACE}
+
+
+'''
+        }
+
+      }
+    }
+
   }
   environment {
     CommitMessage = ''
