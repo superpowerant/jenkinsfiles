@@ -37,10 +37,8 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh '''sh """
-   echo "building start"
-   ${BUILD_COMMAND}
-"""'''
+        sh '''echo "building start"
+${BUILD_COMMAND}'''
       }
     }
 
